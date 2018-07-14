@@ -12,5 +12,8 @@ class MainActivity : AppCompatActivity() {
         androidAsyncTaskButton.setOnClickListener {
             AndroidAsyncTaskImpl(this).execute("http://www.mocky.io/v2/5b49ac2b3100005a008bc03b")
         }
+        myAsyncTaskButton.setOnClickListener {
+            MyAsyncTaskImpl().execute()
+        }
     }
 }
