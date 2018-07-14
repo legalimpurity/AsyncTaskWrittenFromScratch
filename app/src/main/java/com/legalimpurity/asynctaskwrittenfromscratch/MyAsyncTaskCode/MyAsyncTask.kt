@@ -1,6 +1,8 @@
 package com.legalimpurity.asynctaskwrittenfromscratch.MyAsyncTaskCode
 
 import com.legalimpurity.asynctaskwrittenfromscratch.MyAsyncTaskCode.executors.ExecutorProvider
+import java.util.concurrent.Callable
+import java.util.concurrent.Future
 
 abstract class MyAsyncTask(){
 
@@ -10,14 +12,17 @@ abstract class MyAsyncTask(){
     abstract fun onPostExecute()
 
     fun execute() {
-        ExecutorProvider.mainThreadTaskExecutor?.execute {
-            onPreExecute()
+        onPreExecute()
+
+        ExecutorProvider.backgroundTaskExecutor?.let {
+            val future : Future<Boolean> = it.submit(Callable<Boolean>
+            {
+                doInBackground()
+                true
+            })
+            future.get()
         }
-        ExecutorProvider.backgroundTaskExecutor?.execute {
-            doInBackground()
-        }
-        ExecutorProvider.mainThreadTaskExecutor?.execute {
-            onPostExecute()
-        }
+
+        onPostExecute()
     }
 }
