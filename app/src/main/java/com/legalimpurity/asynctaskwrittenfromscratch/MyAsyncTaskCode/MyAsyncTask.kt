@@ -4,25 +4,24 @@ import com.legalimpurity.asynctaskwrittenfromscratch.MyAsyncTaskCode.executors.E
 import java.util.concurrent.Callable
 import java.util.concurrent.Future
 
-abstract class MyAsyncTask(){
+abstract class MyAsyncTask<ResultTypeWeWantOnPostExecute>{
 
     // Functions to be implemented by the user.
-    abstract fun doInBackground()
+    abstract fun doInBackground() : ResultTypeWeWantOnPostExecute
     abstract fun onPreExecute()
-    abstract fun onPostExecute()
+    abstract fun onPostExecute(valueFromDoInBackground: ResultTypeWeWantOnPostExecute)
 
     fun execute() {
         onPreExecute()
 
         ExecutorProvider.backgroundTaskExecutor?.let {
-            val future : Future<Boolean> = it.submit(Callable<Boolean>
+            val future: Future<ResultTypeWeWantOnPostExecute> = it.submit(Callable<ResultTypeWeWantOnPostExecute>
             {
                 doInBackground()
-                true
             })
-            future.get()
-        }
+            val valueFromDoInBackground = future.get()
 
-        onPostExecute()
+            onPostExecute(valueFromDoInBackground)
+        }
     }
 }
