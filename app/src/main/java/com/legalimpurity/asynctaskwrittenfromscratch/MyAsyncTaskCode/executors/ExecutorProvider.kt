@@ -7,8 +7,8 @@ object ExecutorProvider
     private val NUMBER_OF_CORES = Runtime.getRuntime().availableProcessors()
     private var backgroundTasksThreadFactory: ThreadFactory = MyThreadFactory()
 
-    var backgroundTaskExecutor: ThreadPoolExecutor? = null
-    var mainThreadTaskExecutor: Executor? = null
+    var backgroundTaskExecutor: ThreadPoolExecutor
+    var mainThreadTaskExecutor: Executor
 
     init {
 

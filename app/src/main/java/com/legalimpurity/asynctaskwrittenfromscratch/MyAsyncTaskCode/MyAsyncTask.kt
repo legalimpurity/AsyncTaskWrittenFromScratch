@@ -14,14 +14,12 @@ abstract class MyAsyncTask<ResultTypeWeWantOnPostExecute>{
     fun execute() {
         onPreExecute()
 
-        ExecutorProvider.backgroundTaskExecutor?.let {
-            val future: Future<ResultTypeWeWantOnPostExecute> = it.submit(Callable<ResultTypeWeWantOnPostExecute>
-            {
-                doInBackground()
-            })
-            val valueFromDoInBackground = future.get()
+        val future: Future<ResultTypeWeWantOnPostExecute> = ExecutorProvider.backgroundTaskExecutor.submit(Callable<ResultTypeWeWantOnPostExecute>
+        {
+            doInBackground()
+        })
+        val valueFromDoInBackground = future.get()
 
-            onPostExecute(valueFromDoInBackground)
-        }
+        onPostExecute(valueFromDoInBackground)
     }
 }
