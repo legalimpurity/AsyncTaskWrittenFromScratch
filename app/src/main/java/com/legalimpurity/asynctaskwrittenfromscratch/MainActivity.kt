@@ -10,7 +10,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         androidAsyncTaskButton.setOnClickListener {
-            AndroidAsyncTaskImpl().execute()
+            AndroidAsyncTaskImpl(this).execute("http://www.mocky.io/v2/5b49ac2b3100005a008bc03b")
         }
     }
 }
